@@ -56,6 +56,9 @@ pub struct Settings {
   cors_origin: Option<String>,
   /// Print logs in JSON format. You can also disable ANSI colors in logs with env var `NO_COLOR`.
   pub json_logging: bool,
+  /// Shared secret for privileged API endpoints (user registration via external membership systems)
+  #[default(None)]
+  private_api_secret: Option<String>,
 }
 
 impl Settings {
@@ -63,6 +66,12 @@ impl Settings {
     env::var("LEMMY_CORS_ORIGIN")
       .ok()
       .or(self.cors_origin.clone())
+  }
+
+  pub fn private_api_secret(&self) -> Option<String> {
+    env::var("LEMMY_PRIVATE_API_SECRET")
+      .ok()
+      .or(self.private_api_secret.clone())
   }
 }
 

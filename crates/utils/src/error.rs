@@ -180,6 +180,7 @@ pub enum LemmyErrorType {
   Unknown(String),
   CantDeleteSite,
   UrlLengthOverflow,
+  PrivateApiSecretNotConfigured,
 }
 
 cfg_if! {
