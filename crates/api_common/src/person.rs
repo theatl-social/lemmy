@@ -54,6 +54,38 @@ pub struct Register {
 }
 
 #[skip_serializing_none]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "full", derive(TS))]
+#[cfg_attr(feature = "full", ts(export))]
+/// Privileged registration via shared secret (for external membership systems).
+pub struct PrivilegedRegister {
+  pub username: String,
+  pub password: SensitiveString,
+  pub email: SensitiveString,
+  pub api_secret: SensitiveString,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "full", derive(TS))]
+#[cfg_attr(feature = "full", ts(export))]
+/// Check if an email is already registered.
+pub struct CheckEmail {
+  pub email: SensitiveString,
+  pub api_secret: SensitiveString,
+}
+
+#[skip_serializing_none]
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[cfg_attr(feature = "full", derive(TS))]
+#[cfg_attr(feature = "full", ts(export))]
+/// Response for email check.
+pub struct CheckEmailResponse {
+  pub exists: bool,
+  pub person_id: Option<PersonId>,
+  pub username: Option<String>,
+}
+
+#[skip_serializing_none]
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[cfg_attr(feature = "full", derive(TS))]
 #[cfg_attr(feature = "full", ts(export))]

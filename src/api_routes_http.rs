@@ -25,6 +25,7 @@ use lemmy_api::{
     block::block_person,
     change_password::change_password,
     change_password_after_reset::change_password_after_reset,
+    check_email::check_email_registered,
     donation_dialog_shown::donation_dialog_shown,
     generate_totp_secret::generate_totp_secret,
     get_captcha::get_captcha,
@@ -124,7 +125,7 @@ use lemmy_api_crud::{
     update::update_private_message,
   },
   site::{create::create_site, read::get_site, update::update_site},
-  user::{create::register, delete::delete_account},
+  user::{create::{privileged_register, register}, delete::delete_account},
 };
 use lemmy_apub::api::{
   list_comments::list_comments,
@@ -269,6 +270,20 @@ pub fn config(cfg: &mut web::ServiceConfig, rate_limit: &RateLimitCell) {
           .guard(guard::Post())
           .wrap(rate_limit.register())
           .route(web::post().to(register)),
+      )
+      .service(
+        // Privileged registration endpoint (requires shared secret)
+        web::resource("/user/privileged_register")
+          .guard(guard::Post())
+          .wrap(rate_limit.register())
+          .route(web::post().to(privileged_register)),
+      )
+      .service(
+        // Check email endpoint (requires shared secret)
+        web::resource("/user/check_email")
+          .guard(guard::Post())
+          .wrap(rate_limit.message())
+          .route(web::post().to(check_email_registered)),
       )
       // User
       .service(
