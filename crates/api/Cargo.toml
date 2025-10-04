@@ -39,6 +39,7 @@ sitemap-rs = "0.2.1"
 totp-rs = { version = "5.7.0", features = ["gen_secret", "otpauth"] }
 actix-web-httpauth = "0.8.2"
 diesel-async = { workspace = true, features = ["deadpool", "postgres"] }
+subtle = "2.6"
 
 [dev-dependencies]
 serial_test = { workspace = true }
