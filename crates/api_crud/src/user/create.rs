@@ -17,6 +17,7 @@ use lemmy_api_common::{
     EndpointType,
   },
 };
+use subtle::ConstantTimeEq;
 use lemmy_db_schema::{
   aggregates::structs::PersonAggregates,
   source::{
@@ -269,8 +270,6 @@ pub async fn privileged_register(
   req: HttpRequest,
   context: Data<LemmyContext>,
 ) -> LemmyResult<Json<LoginResponse>> {
-  use subtle::ConstantTimeEq;
-
   // Validate the API secret first
   let configured_secret = context
     .settings()
@@ -278,9 +277,9 @@ pub async fn privileged_register(
     .ok_or(LemmyErrorType::PrivateApiSecretNotConfigured)?;
 
   // Use constant-time comparison to prevent timing attacks
-  let is_valid = configured_secret
+  let is_valid: bool = configured_secret
     .as_bytes()
-    .ct_eq(data.api_secret.as_ref().as_bytes())
+    .ct_eq(data.api_secret.as_ref())
     .into();
 
   if !is_valid {
