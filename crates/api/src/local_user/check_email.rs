@@ -21,7 +21,7 @@ pub async fn check_email_registered(
     .ok_or(LemmyErrorType::PrivateApiSecretNotConfigured)?;
 
   // Use constant-time comparison to prevent timing attacks
-  let is_valid = configured_secret
+  let is_valid: bool = configured_secret
     .as_bytes()
     .ct_eq(data.api_secret.as_ref())
     .into();
