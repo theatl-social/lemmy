@@ -59,9 +59,9 @@ jobs:
 
       - name: Run clippy on our modules
         run: |
-          cargo clippy -p lemmy_api --lib -- -D warnings || true
-          cargo clippy -p lemmy_api_crud --lib -- -D warnings || true
-          cargo clippy -p lemmy_api_common --lib -- -D warnings || true
+          cargo clippy -p lemmy_api --lib || true
+          cargo clippy -p lemmy_api_crud --lib || true
+          cargo clippy -p lemmy_api_common --lib || true
 
   build:
     name: Build and Check
