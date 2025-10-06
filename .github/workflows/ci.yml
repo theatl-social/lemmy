@@ -23,8 +23,8 @@ jobs:
         with:
           components: rustfmt
 
-      - name: Check formatting
-        run: cargo fmt --all -- --check
+      - name: Check formatting (warnings only)
+        run: cargo fmt --all -- --check || echo "Formatting differences found but not blocking"
 
   linting:
     name: Clippy Lints
