@@ -6,18 +6,11 @@ use lemmy_api_common::{
   context::LemmyContext,
   person::{LoginResponse, PrivilegedRegister, Register},
   utils::{
-    generate_inbox_url,
-    generate_local_apub_endpoint,
-    generate_shared_inbox_url,
-    honeypot_check,
-    local_site_to_slur_regex,
-    password_length_check,
-    send_new_applicant_email_to_admins,
-    send_verification_email,
-    EndpointType,
+    generate_inbox_url, generate_local_apub_endpoint, generate_shared_inbox_url, honeypot_check,
+    local_site_to_slur_regex, password_length_check, send_new_applicant_email_to_admins,
+    send_verification_email, EndpointType,
   },
 };
-use subtle::ConstantTimeEq;
 use lemmy_db_schema::{
   aggregates::structs::PersonAggregates,
   newtypes::LanguageId,
@@ -43,6 +36,7 @@ use lemmy_utils::{
   },
 };
 use std::collections::HashSet;
+use subtle::ConstantTimeEq;
 
 #[tracing::instrument(skip(context))]
 pub async fn register(
@@ -331,7 +325,8 @@ pub async fn privileged_register(
 
   // Get site languages for the user
   let all_languages = Language::read_all(&mut context.pool()).await?;
-  let discussion_languages = SiteLanguage::read(&mut context.pool(), site_view.local_site.site_id).await?;
+  let discussion_languages =
+    SiteLanguage::read(&mut context.pool(), site_view.local_site.site_id).await?;
   let mut language_ids: Vec<LanguageId> = discussion_languages.into_iter().collect();
 
   // If no site languages, enable all
@@ -360,14 +355,15 @@ pub async fn privileged_register(
           password_encrypted: tx_data.password.to_string(),
           show_nsfw: Some(tx_site.content_warning.is_some()),
           accepted_application: Some(true), // Auto-accept
-          email_verified: Some(true),        // Auto-verify email
+          email_verified: Some(true),       // Auto-verify email
           default_listing_type: Some(tx_local_site.default_post_listing_type),
           post_listing_mode: Some(tx_local_site.default_post_listing_mode),
           admin: Some(false), // Never make privileged registrations admin
           ..LocalUserInsertForm::new(person.id, tx_data.password.to_string())
         };
 
-        let local_user = LocalUser::create(&mut conn.into(), &local_user_form, tx_language_ids).await?;
+        let local_user =
+          LocalUser::create(&mut conn.into(), &local_user_form, tx_language_ids).await?;
 
         Ok((person, local_user))
       }
@@ -546,7 +542,10 @@ mod tests {
 
     let result = privileged_register(data, req, context.into()).await;
     assert!(result.is_err());
-    assert_eq!(result.unwrap_err().error_type, LemmyErrorType::InvalidPassword);
+    assert_eq!(
+      result.unwrap_err().error_type,
+      LemmyErrorType::InvalidPassword
+    );
   }
 
   #[tokio::test]

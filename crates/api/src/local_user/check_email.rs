@@ -13,7 +13,6 @@ pub async fn check_email_registered(
   data: Json<CheckEmail>,
   context: Data<LemmyContext>,
 ) -> LemmyResult<Json<CheckEmailResponse>> {
-
   // Validate the API secret first
   let configured_secret = context
     .settings()
@@ -54,8 +53,8 @@ mod tests {
   use super::*;
   use actix_web::test::TestRequest;
   use lemmy_api_common::context::LemmyContext;
-  use lemmy_api_crud::user::create::privileged_register;
   use lemmy_api_common::person::PrivilegedRegister;
+  use lemmy_api_crud::user::create::privileged_register;
   use lemmy_db_schema::{
     source::{
       instance::Instance,
@@ -96,9 +95,7 @@ mod tests {
       .unwrap();
     let site_form = SiteInsertForm::new("test site".to_string(), instance.id);
     let site = Site::create(pool_ref, &site_form).await.unwrap();
-    let local_site_form = LocalSiteInsertForm::builder()
-      .site_id(site.id)
-      .build();
+    let local_site_form = LocalSiteInsertForm::builder().site_id(site.id).build();
     LocalSite::create(pool_ref, &local_site_form).await.unwrap();
 
     context
