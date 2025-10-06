@@ -12,9 +12,7 @@ use activitypub_federation::{
 };
 use chrono::{DateTime, Utc};
 use lemmy_api_common::{
-  community::BanFromCommunity,
-  context::LemmyContext,
-  utils::check_expire_time,
+  community::BanFromCommunity, context::LemmyContext, utils::check_expire_time,
 };
 use lemmy_db_schema::{
   newtypes::CommunityId,

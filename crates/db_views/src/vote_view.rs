@@ -1,10 +1,6 @@
 use crate::structs::VoteView;
 use diesel::{
-  result::Error,
-  BoolExpressionMethods,
-  ExpressionMethods,
-  JoinOnDsl,
-  NullableExpressionMethods,
+  result::Error, BoolExpressionMethods, ExpressionMethods, JoinOnDsl, NullableExpressionMethods,
   QueryDsl,
 };
 use diesel_async::RunQueryDsl;

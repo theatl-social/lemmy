@@ -9,9 +9,7 @@ use crate::{
   },
   utils::{
     functions::{coalesce, lower},
-    get_conn,
-    now,
-    DbPool,
+    get_conn, now, DbPool,
   },
   CommunityVisibility,
 };
@@ -19,10 +17,7 @@ use bcrypt::{hash, DEFAULT_COST};
 use diesel::{
   dsl::{insert_into, not, IntervalDsl},
   result::Error,
-  CombineDsl,
-  ExpressionMethods,
-  JoinOnDsl,
-  QueryDsl,
+  CombineDsl, ExpressionMethods, JoinOnDsl, QueryDsl,
 };
 use diesel_async::RunQueryDsl;
 use lemmy_utils::error::{LemmyErrorType, LemmyResult};
@@ -152,16 +147,8 @@ impl LocalUser {
     person_id_: PersonId,
   ) -> Result<UserBackupLists, Error> {
     use crate::schema::{
-      comment,
-      comment_saved,
-      community,
-      community_block,
-      community_follower,
-      instance,
-      instance_block,
-      person_block,
-      post,
-      post_saved,
+      comment, comment_saved, community, community_block, community_follower, instance,
+      instance_block, person_block, post, post_saved,
     };
     let conn = &mut get_conn(pool).await?;
 

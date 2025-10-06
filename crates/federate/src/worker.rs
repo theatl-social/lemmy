@@ -2,9 +2,7 @@ use crate::{
   inboxes::RealCommunityInboxCollector,
   send::{SendActivityResult, SendRetryTask, SendSuccessInfo},
   util::{
-    get_activity_cached,
-    get_latest_activity_id,
-    FederationQueueStateWithDomain,
+    get_activity_cached, get_latest_activity_id, FederationQueueStateWithDomain,
     WORK_FINISHED_RECHECK_DELAY,
   },
 };
@@ -12,8 +10,7 @@ use activitypub_federation::config::FederationConfig;
 use anyhow::{Context, Result};
 use chrono::{DateTime, Days, TimeZone, Utc};
 use lemmy_api_common::{
-  context::LemmyContext,
-  federate_retry_sleep_duration,
+  context::LemmyContext, federate_retry_sleep_duration,
   lemmy_utils::settings::structs::FederationWorkerConfig,
 };
 use lemmy_db_schema::{
@@ -445,8 +442,7 @@ mod test {
 
   use super::*;
   use activitypub_federation::{
-    http_signatures::generate_actor_keypair,
-    protocol::context::WithContext,
+    http_signatures::generate_actor_keypair, protocol::context::WithContext,
   };
   use actix_web::{dev::ServerHandle, web, App, HttpResponse, HttpServer};
   use lemmy_api_common::utils::{generate_inbox_url, generate_shared_inbox_url};

@@ -3,11 +3,7 @@ use crate::{
   newtypes::{CommunityId, DbUrl, InstanceId, PersonId},
   schema::{comment, community, instance, local_user, person, person_follower, post},
   source::person::{
-    Person,
-    PersonFollower,
-    PersonFollowerForm,
-    PersonInsertForm,
-    PersonUpdateForm,
+    Person, PersonFollower, PersonFollowerForm, PersonInsertForm, PersonUpdateForm,
   },
   traits::{ApubActor, Crud, Followable},
   utils::{functions::lower, get_conn, naive_now, DbPool},
@@ -15,10 +11,7 @@ use crate::{
 use diesel::{
   dsl::{insert_into, not},
   result::Error,
-  CombineDsl,
-  ExpressionMethods,
-  JoinOnDsl,
-  QueryDsl,
+  CombineDsl, ExpressionMethods, JoinOnDsl, QueryDsl,
 };
 use diesel_async::RunQueryDsl;
 

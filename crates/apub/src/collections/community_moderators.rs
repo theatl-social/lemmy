@@ -3,11 +3,8 @@ use crate::{
   protocol::collections::group_moderators::GroupModerators,
 };
 use activitypub_federation::{
-  config::Data,
-  fetch::object_id::ObjectId,
-  kinds::collection::OrderedCollectionType,
-  protocol::verification::verify_domains_match,
-  traits::Collection,
+  config::Data, fetch::object_id::ObjectId, kinds::collection::OrderedCollectionType,
+  protocol::verification::verify_domains_match, traits::Collection,
 };
 use lemmy_api_common::{context::LemmyContext, utils::generate_moderators_url};
 use lemmy_db_views_actor::structs::CommunityModeratorView;

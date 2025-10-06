@@ -5,10 +5,7 @@ use crate::{
 };
 use diesel::{dsl::insert_into, result::Error};
 use diesel_async::{
-  scoped_futures::ScopedFutureExt,
-  AsyncConnection,
-  AsyncPgConnection,
-  RunQueryDsl,
+  scoped_futures::ScopedFutureExt, AsyncConnection, AsyncPgConnection, RunQueryDsl,
 };
 
 impl LocalSiteUrlBlocklist {

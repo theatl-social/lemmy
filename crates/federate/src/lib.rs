@@ -1,8 +1,7 @@
 use crate::{util::CancellableTask, worker::InstanceWorker};
 use activitypub_federation::config::FederationConfig;
 use lemmy_api_common::{
-  context::LemmyContext,
-  lemmy_utils::settings::structs::FederationWorkerConfig,
+  context::LemmyContext, lemmy_utils::settings::structs::FederationWorkerConfig,
 };
 use lemmy_db_schema::{newtypes::InstanceId, source::instance::Instance};
 use lemmy_utils::error::LemmyResult;
@@ -200,8 +199,7 @@ mod test {
   use activitypub_federation::config::Data;
   use chrono::DateTime;
   use lemmy_db_schema::source::{
-    federation_allowlist::FederationAllowList,
-    federation_blocklist::FederationBlockList,
+    federation_allowlist::FederationAllowList, federation_blocklist::FederationBlockList,
     instance::InstanceForm,
   };
   use lemmy_utils::error::LemmyError;

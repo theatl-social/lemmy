@@ -6,9 +6,7 @@ use lemmy_api_common::{
   post::{CreatePostReport, PostReportResponse},
   send_activity::{ActivityChannel, SendActivityData},
   utils::{
-    check_community_user_action,
-    check_post_deleted_or_removed,
-    send_new_report_email_to_admins,
+    check_community_user_action, check_post_deleted_or_removed, send_new_report_email_to_admins,
   },
 };
 use lemmy_db_schema::{

@@ -7,10 +7,7 @@ use lemmy_api_common::{
   request::generate_post_link_metadata,
   send_activity::SendActivityData,
   utils::{
-    check_community_user_action,
-    get_url_blocklist,
-    local_site_to_slur_regex,
-    process_markdown_opt,
+    check_community_user_action, get_url_blocklist, local_site_to_slur_regex, process_markdown_opt,
   },
 };
 use lemmy_db_schema::{
@@ -28,10 +25,7 @@ use lemmy_utils::{
   utils::{
     slurs::check_slurs,
     validation::{
-      is_url_blocked,
-      is_valid_alt_text_field,
-      is_valid_body_field,
-      is_valid_post_title,
+      is_url_blocked, is_valid_alt_text_field, is_valid_body_field, is_valid_post_title,
       is_valid_url,
     },
   },

@@ -3,15 +3,8 @@ use diesel::{
   dsl::{exists, not},
   pg::Pg,
   result::Error,
-  sql_types,
-  BoolExpressionMethods,
-  BoxableExpression,
-  ExpressionMethods,
-  IntoSql,
-  JoinOnDsl,
-  NullableExpressionMethods,
-  PgTextExpressionMethods,
-  QueryDsl,
+  sql_types, BoolExpressionMethods, BoxableExpression, ExpressionMethods, IntoSql, JoinOnDsl,
+  NullableExpressionMethods, PgTextExpressionMethods, QueryDsl,
 };
 use diesel_async::RunQueryDsl;
 use diesel_ltree::{nlevel, subpath, Ltree, LtreeExtensions};
@@ -19,26 +12,13 @@ use lemmy_db_schema::{
   impls::local_user::LocalUserOptionHelper,
   newtypes::{CommentId, CommunityId, LocalUserId, PersonId, PostId},
   schema::{
-    comment,
-    comment_aggregates,
-    comment_like,
-    comment_saved,
-    community,
-    community_block,
-    community_follower,
-    community_moderator,
-    community_person_ban,
-    instance_block,
-    local_user,
-    local_user_language,
-    person,
-    person_block,
-    post,
+    comment, comment_aggregates, comment_like, comment_saved, community, community_block,
+    community_follower, community_moderator, community_person_ban, instance_block, local_user,
+    local_user_language, person, person_block, post,
   },
   source::local_user::LocalUser,
   utils::{fuzzy_search, limit_and_offset, DbConn, DbPool, ListFn, Queries, ReadFn},
-  CommentSortType,
-  ListingType,
+  CommentSortType, ListingType,
 };
 
 fn queries<'a>() -> Queries<
@@ -438,22 +418,12 @@ mod tests {
     source::{
       actor_language::LocalUserLanguage,
       comment::{
-        Comment,
-        CommentInsertForm,
-        CommentLike,
-        CommentLikeForm,
-        CommentSaved,
-        CommentSavedForm,
+        Comment, CommentInsertForm, CommentLike, CommentLikeForm, CommentSaved, CommentSavedForm,
         CommentUpdateForm,
       },
       community::{
-        Community,
-        CommunityInsertForm,
-        CommunityModerator,
-        CommunityModeratorForm,
-        CommunityPersonBan,
-        CommunityPersonBanForm,
-        CommunityUpdateForm,
+        Community, CommunityInsertForm, CommunityModerator, CommunityModeratorForm,
+        CommunityPersonBan, CommunityPersonBanForm, CommunityUpdateForm,
       },
       instance::Instance,
       language::Language,
@@ -465,8 +435,7 @@ mod tests {
     },
     traits::{Bannable, Blockable, Crud, Joinable, Likeable, Saveable},
     utils::{build_db_pool_for_tests, RANK_DEFAULT},
-    CommunityVisibility,
-    SubscribedType,
+    CommunityVisibility, SubscribedType,
   };
   use lemmy_utils::{error::LemmyResult, LemmyErrorType};
   use pretty_assertions::assert_eq;

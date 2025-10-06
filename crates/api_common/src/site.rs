@@ -2,61 +2,26 @@ use crate::federate_retry_sleep_duration;
 use chrono::{DateTime, Utc};
 use lemmy_db_schema::{
   newtypes::{
-    CommentId,
-    CommunityId,
-    InstanceId,
-    LanguageId,
-    PersonId,
-    PostId,
-    RegistrationApplicationId,
+    CommentId, CommunityId, InstanceId, LanguageId, PersonId, PostId, RegistrationApplicationId,
   },
   source::{
-    federation_queue_state::FederationQueueState,
-    instance::Instance,
-    language::Language,
-    local_site_url_blocklist::LocalSiteUrlBlocklist,
-    tagline::Tagline,
+    federation_queue_state::FederationQueueState, instance::Instance, language::Language,
+    local_site_url_blocklist::LocalSiteUrlBlocklist, tagline::Tagline,
   },
-  ListingType,
-  ModlogActionType,
-  PostListingMode,
-  RegistrationMode,
-  SearchType,
-  SortType,
+  ListingType, ModlogActionType, PostListingMode, RegistrationMode, SearchType, SortType,
 };
 use lemmy_db_views::structs::{
-  CommentView,
-  CustomEmojiView,
-  LocalUserView,
-  PostView,
-  RegistrationApplicationView,
-  SiteView,
+  CommentView, CustomEmojiView, LocalUserView, PostView, RegistrationApplicationView, SiteView,
 };
 use lemmy_db_views_actor::structs::{
-  CommunityBlockView,
-  CommunityFollowerView,
-  CommunityModeratorView,
-  CommunityView,
-  InstanceBlockView,
-  PersonBlockView,
-  PersonView,
+  CommunityBlockView, CommunityFollowerView, CommunityModeratorView, CommunityView,
+  InstanceBlockView, PersonBlockView, PersonView,
 };
 use lemmy_db_views_moderator::structs::{
-  AdminPurgeCommentView,
-  AdminPurgeCommunityView,
-  AdminPurgePersonView,
-  AdminPurgePostView,
-  ModAddCommunityView,
-  ModAddView,
-  ModBanFromCommunityView,
-  ModBanView,
-  ModFeaturePostView,
-  ModHideCommunityView,
-  ModLockPostView,
-  ModRemoveCommentView,
-  ModRemoveCommunityView,
-  ModRemovePostView,
-  ModTransferCommunityView,
+  AdminPurgeCommentView, AdminPurgeCommunityView, AdminPurgePersonView, AdminPurgePostView,
+  ModAddCommunityView, ModAddView, ModBanFromCommunityView, ModBanView, ModFeaturePostView,
+  ModHideCommunityView, ModLockPostView, ModRemoveCommentView, ModRemoveCommunityView,
+  ModRemovePostView, ModTransferCommunityView,
 };
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;

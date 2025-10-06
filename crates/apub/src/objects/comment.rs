@@ -5,8 +5,7 @@ use crate::{
   objects::{append_attachments_to_comment, read_from_string_or_source, verify_is_remote_object},
   protocol::{
     objects::{note::Note, LanguageTag},
-    InCommunity,
-    Source,
+    InCommunity, Source,
   },
 };
 use activitypub_federation::{
@@ -19,10 +18,7 @@ use chrono::{DateTime, Utc};
 use lemmy_api_common::{
   context::LemmyContext,
   utils::{
-    check_comment_depth,
-    get_url_blocklist,
-    is_mod_or_admin,
-    local_site_opt_to_slur_regex,
+    check_comment_depth, get_url_blocklist, is_mod_or_admin, local_site_opt_to_slur_regex,
     process_markdown,
   },
 };

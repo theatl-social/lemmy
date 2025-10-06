@@ -8,13 +8,7 @@ use crate::{
   utils::{get_conn, DbPool},
 };
 use diesel::{
-  dsl::exists,
-  insert_into,
-  result::Error,
-  select,
-  ExpressionMethods,
-  NotFound,
-  QueryDsl,
+  dsl::exists, insert_into, result::Error, select, ExpressionMethods, NotFound, QueryDsl,
 };
 use diesel_async::{scoped_futures::ScopedFutureExt, AsyncConnection, RunQueryDsl};
 use url::Url;

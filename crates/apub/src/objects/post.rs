@@ -1,17 +1,13 @@
 use crate::{
   activities::{verify_is_public, verify_person_in_community},
-  check_apub_id_valid_with_strictness,
-  local_site_data_cached,
+  check_apub_id_valid_with_strictness, local_site_data_cached,
   objects::{read_from_string_or_source_opt, verify_is_remote_object},
   protocol::{
     objects::{
       page::{Attachment, Hashtag, HashtagType, Page, PageType},
-      AttributedTo,
-      LanguageTag,
+      AttributedTo, LanguageTag,
     },
-    ImageObject,
-    InCommunity,
-    Source,
+    ImageObject, InCommunity, Source,
   },
 };
 use activitypub_federation::{

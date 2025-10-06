@@ -1,30 +1,19 @@
 use crate::structs::{CommunityModeratorView, CommunityView, PersonView};
 use diesel::{
-  pg::Pg,
-  result::Error,
-  BoolExpressionMethods,
-  ExpressionMethods,
-  JoinOnDsl,
-  NullableExpressionMethods,
-  PgTextExpressionMethods,
-  QueryDsl,
+  pg::Pg, result::Error, BoolExpressionMethods, ExpressionMethods, JoinOnDsl,
+  NullableExpressionMethods, PgTextExpressionMethods, QueryDsl,
 };
 use diesel_async::RunQueryDsl;
 use lemmy_db_schema::{
   impls::local_user::LocalUserOptionHelper,
   newtypes::{CommunityId, PersonId},
   schema::{
-    community,
-    community_aggregates,
-    community_block,
-    community_follower,
-    community_person_ban,
+    community, community_aggregates, community_block, community_follower, community_person_ban,
     instance_block,
   },
   source::{community::CommunityFollower, local_user::LocalUser, site::Site},
   utils::{fuzzy_search, limit_and_offset, DbConn, DbPool, ListFn, Queries, ReadFn},
-  ListingType,
-  SortType,
+  ListingType, SortType,
 };
 
 fn queries<'a>() -> Queries<

@@ -1,32 +1,16 @@
 use crate::structs::{CommentReportView, LocalUserView};
 use diesel::{
-  dsl::now,
-  pg::Pg,
-  result::Error,
-  BoolExpressionMethods,
-  ExpressionMethods,
-  JoinOnDsl,
-  NullableExpressionMethods,
-  QueryDsl,
+  dsl::now, pg::Pg, result::Error, BoolExpressionMethods, ExpressionMethods, JoinOnDsl,
+  NullableExpressionMethods, QueryDsl,
 };
 use diesel_async::RunQueryDsl;
 use lemmy_db_schema::{
   aliases,
   newtypes::{CommentId, CommentReportId, CommunityId, PersonId},
   schema::{
-    comment,
-    comment_aggregates,
-    comment_like,
-    comment_report,
-    comment_saved,
-    community,
-    community_follower,
-    community_moderator,
-    community_person_ban,
-    local_user,
-    person,
-    person_block,
-    post,
+    comment, comment_aggregates, comment_like, comment_report, comment_saved, community,
+    community_follower, community_moderator, community_person_ban, local_user, person,
+    person_block, post,
   },
   utils::{get_conn, limit_and_offset, DbConn, DbPool, ListFn, Queries, ReadFn},
 };
@@ -281,8 +265,7 @@ mod tests {
     },
     traits::{Crud, Joinable, Reportable},
     utils::{build_db_pool_for_tests, RANK_DEFAULT},
-    CommunityVisibility,
-    SubscribedType,
+    CommunityVisibility, SubscribedType,
   };
   use pretty_assertions::assert_eq;
   use serial_test::serial;

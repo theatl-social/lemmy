@@ -2,12 +2,7 @@ use crate::{
   diesel::dsl::IntervalDsl,
   newtypes::InstanceId,
   schema::{
-    federation_allowlist,
-    federation_blocklist,
-    federation_queue_state,
-    instance,
-    local_site,
-    site,
+    federation_allowlist, federation_blocklist, federation_queue_state, instance, local_site, site,
   },
   source::{
     federation_queue_state::FederationQueueState,
@@ -15,20 +10,13 @@ use crate::{
   },
   utils::{
     functions::{coalesce, lower},
-    get_conn,
-    naive_now,
-    now,
-    DbPool,
+    get_conn, naive_now, now, DbPool,
   },
 };
 use diesel::{
   dsl::{count_star, insert_into},
   result::Error,
-  ExpressionMethods,
-  NullableExpressionMethods,
-  OptionalExtension,
-  QueryDsl,
-  SelectableHelper,
+  ExpressionMethods, NullableExpressionMethods, OptionalExtension, QueryDsl, SelectableHelper,
 };
 use diesel_async::RunQueryDsl;
 

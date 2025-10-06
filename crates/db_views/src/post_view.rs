@@ -5,16 +5,8 @@ use diesel::{
   pg::Pg,
   query_builder::AsQuery,
   result::Error,
-  sql_types,
-  BoolExpressionMethods,
-  BoxableExpression,
-  ExpressionMethods,
-  IntoSql,
-  JoinOnDsl,
-  NullableExpressionMethods,
-  OptionalExtension,
-  PgTextExpressionMethods,
-  QueryDsl,
+  sql_types, BoolExpressionMethods, BoxableExpression, ExpressionMethods, IntoSql, JoinOnDsl,
+  NullableExpressionMethods, OptionalExtension, PgTextExpressionMethods, QueryDsl,
 };
 use diesel_async::RunQueryDsl;
 use i_love_jesus::PaginatedQueryBuilder;
@@ -23,42 +15,16 @@ use lemmy_db_schema::{
   impls::local_user::LocalUserOptionHelper,
   newtypes::{CommunityId, LocalUserId, PersonId, PostId},
   schema::{
-    community,
-    community_block,
-    community_follower,
-    community_moderator,
-    community_person_ban,
-    image_details,
-    instance_block,
-    local_user,
-    local_user_language,
-    person,
-    person_block,
-    person_post_aggregates,
-    post,
-    post_aggregates,
-    post_hide,
-    post_like,
-    post_read,
-    post_saved,
+    community, community_block, community_follower, community_moderator, community_person_ban,
+    image_details, instance_block, local_user, local_user_language, person, person_block,
+    person_post_aggregates, post, post_aggregates, post_hide, post_like, post_read, post_saved,
   },
   source::{local_user::LocalUser, site::Site},
   utils::{
-    functions::coalesce,
-    fuzzy_search,
-    get_conn,
-    limit_and_offset,
-    now,
-    Commented,
-    DbConn,
-    DbPool,
-    ListFn,
-    Queries,
-    ReadFn,
-    ReverseTimestampKey,
+    functions::coalesce, fuzzy_search, get_conn, limit_and_offset, now, Commented, DbConn, DbPool,
+    ListFn, Queries, ReadFn, ReverseTimestampKey,
   },
-  ListingType,
-  SortType,
+  ListingType, SortType,
 };
 use tracing::debug;
 
@@ -650,9 +616,7 @@ impl<'a> PostQuery<'a> {
     use lemmy_db_schema::schema::{
       community_aggregates::dsl::{community_aggregates, community_id, users_active_month},
       community_follower::dsl::{
-        community_follower,
-        community_id as follower_community_id,
-        person_id,
+        community_follower, community_id as follower_community_id, person_id,
       },
     };
     let (limit, offset) = limit_and_offset(self.page, self.limit)?;
@@ -747,13 +711,8 @@ mod tests {
       actor_language::LocalUserLanguage,
       comment::{Comment, CommentInsertForm},
       community::{
-        Community,
-        CommunityInsertForm,
-        CommunityModerator,
-        CommunityModeratorForm,
-        CommunityPersonBan,
-        CommunityPersonBanForm,
-        CommunityUpdateForm,
+        Community, CommunityInsertForm, CommunityModerator, CommunityModeratorForm,
+        CommunityPersonBan, CommunityPersonBanForm, CommunityUpdateForm,
       },
       community_block::{CommunityBlock, CommunityBlockForm},
       instance::Instance,
@@ -768,9 +727,7 @@ mod tests {
     },
     traits::{Bannable, Blockable, Crud, Joinable, Likeable},
     utils::{build_db_pool, build_db_pool_for_tests, DbPool, RANK_DEFAULT},
-    CommunityVisibility,
-    SortType,
-    SubscribedType,
+    CommunityVisibility, SortType, SubscribedType,
   };
   use lemmy_utils::error::{LemmyErrorType, LemmyResult};
   use pretty_assertions::assert_eq;

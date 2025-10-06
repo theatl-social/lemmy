@@ -2,10 +2,7 @@
 use crate::schema::local_site;
 use crate::{
   newtypes::{LocalSiteId, SiteId},
-  ListingType,
-  PostListingMode,
-  RegistrationMode,
-  SortType,
+  ListingType, PostListingMode, RegistrationMode, SortType,
 };
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};

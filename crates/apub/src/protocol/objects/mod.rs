@@ -155,13 +155,8 @@ impl AttributedTo {
 mod tests {
   use crate::protocol::{
     objects::{
-      chat_message::ChatMessage,
-      group::Group,
-      instance::Instance,
-      note::Note,
-      page::Page,
-      person::Person,
-      tombstone::Tombstone,
+      chat_message::ChatMessage, group::Group, instance::Instance, note::Note, page::Page,
+      person::Person, tombstone::Tombstone,
     },
     tests::{test_json, test_parse_lemmy_item},
   };

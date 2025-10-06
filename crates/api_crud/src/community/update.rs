@@ -7,10 +7,7 @@ use lemmy_api_common::{
   request::replace_image,
   send_activity::{ActivityChannel, SendActivityData},
   utils::{
-    check_community_mod_action,
-    get_url_blocklist,
-    local_site_to_slur_regex,
-    process_markdown_opt,
+    check_community_mod_action, get_url_blocklist, local_site_to_slur_regex, process_markdown_opt,
     proxy_image_link_opt_api,
   },
 };

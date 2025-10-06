@@ -5,12 +5,8 @@ use lemmy_api_common::{
   private_message::{CreatePrivateMessage, PrivateMessageResponse},
   send_activity::{ActivityChannel, SendActivityData},
   utils::{
-    check_person_block,
-    get_interface_language,
-    get_url_blocklist,
-    local_site_to_slur_regex,
-    process_markdown,
-    send_email_to_user,
+    check_person_block, get_interface_language, get_url_blocklist, local_site_to_slur_regex,
+    process_markdown, send_email_to_user,
   },
 };
 use lemmy_db_schema::{

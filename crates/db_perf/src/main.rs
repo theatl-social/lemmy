@@ -5,9 +5,7 @@ use anyhow::Context;
 use clap::Parser;
 use diesel::{
   dsl::{self, sql},
-  sql_types,
-  ExpressionMethods,
-  IntoSql,
+  sql_types, ExpressionMethods, IntoSql,
 };
 use diesel_async::{RunQueryDsl, SimpleAsyncConnection};
 use lemmy_db_schema::{

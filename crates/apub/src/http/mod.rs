@@ -1,13 +1,9 @@
 use crate::{
-  activity_lists::SharedInboxActivities,
-  fetcher::user_or_community::UserOrCommunity,
-  protocol::objects::tombstone::Tombstone,
-  FEDERATION_CONTEXT,
+  activity_lists::SharedInboxActivities, fetcher::user_or_community::UserOrCommunity,
+  protocol::objects::tombstone::Tombstone, FEDERATION_CONTEXT,
 };
 use activitypub_federation::{
-  actix_web::inbox::receive_activity,
-  config::Data,
-  protocol::context::WithContext,
+  actix_web::inbox::receive_activity, config::Data, protocol::context::WithContext,
   FEDERATION_CONTENT_TYPE,
 };
 use actix_web::{web, web::Bytes, HttpRequest, HttpResponse};

@@ -5,8 +5,7 @@ use crate::{
   objects::{comment::ApubComment, community::ApubCommunity, person::ApubPerson, post::ApubPost},
   protocol::{
     objects::{page::Attachment, LanguageTag},
-    InCommunity,
-    Source,
+    InCommunity, Source,
   },
 };
 use activitypub_federation::{

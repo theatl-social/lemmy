@@ -6,12 +6,8 @@ use lemmy_api_common::{
   context::LemmyContext,
   site::{CreateSite, SiteResponse},
   utils::{
-    generate_shared_inbox_url,
-    get_url_blocklist,
-    is_admin,
-    local_site_rate_limit_to_rate_limit_config,
-    local_site_to_slur_regex,
-    process_markdown_opt,
+    generate_shared_inbox_url, get_url_blocklist, is_admin,
+    local_site_rate_limit_to_rate_limit_config, local_site_to_slur_regex, process_markdown_opt,
     proxy_image_link_api,
   },
 };
@@ -32,9 +28,7 @@ use lemmy_utils::{
   utils::{
     slurs::{check_slurs, check_slurs_opt},
     validation::{
-      build_and_check_regex,
-      is_valid_body_field,
-      site_description_length_check,
+      build_and_check_regex, is_valid_body_field, site_description_length_check,
       site_name_length_check,
     },
   },

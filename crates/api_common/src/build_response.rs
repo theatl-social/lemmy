@@ -4,9 +4,7 @@ use crate::{
   context::LemmyContext,
   post::PostResponse,
   utils::{
-    check_person_instance_community_block,
-    get_interface_language,
-    is_mod_or_admin,
+    check_person_instance_community_block, get_interface_language, is_mod_or_admin,
     send_email_to_user,
   },
 };

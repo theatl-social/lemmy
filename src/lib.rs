@@ -8,8 +8,7 @@ pub mod session_middleware;
 pub mod telemetry;
 
 use crate::{
-  code_migrations::run_advanced_migrations,
-  root_span_builder::QuieterRootSpanBuilder,
+  code_migrations::run_advanced_migrations, root_span_builder::QuieterRootSpanBuilder,
   session_middleware::SessionMiddleware,
 };
 use activitypub_federation::config::{FederationConfig, FederationMiddleware};
@@ -18,9 +17,7 @@ use actix_web::{
   dev::{ServerHandle, ServiceResponse},
   middleware::{self, Condition, ErrorHandlerResponse, ErrorHandlers},
   web::Data,
-  App,
-  HttpResponse,
-  HttpServer,
+  App, HttpResponse, HttpServer,
 };
 use actix_web_prom::PrometheusMetricsBuilder;
 use clap::Parser;
@@ -34,8 +31,7 @@ use lemmy_api_common::{
 use lemmy_apub::{
   activities::{handle_outgoing_activities, match_outgoing_activities},
   objects::instance::ApubSite,
-  VerifyUrlData,
-  FEDERATION_HTTP_FETCH_LIMIT,
+  VerifyUrlData, FEDERATION_HTTP_FETCH_LIMIT,
 };
 use lemmy_db_schema::{source::secret::Secret, utils::build_db_pool};
 use lemmy_federate::{Opts, SendManager};

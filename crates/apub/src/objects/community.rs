@@ -5,8 +5,7 @@ use crate::{
   objects::{instance::fetch_instance_actor_for_object, read_from_string_or_source_opt},
   protocol::{
     objects::{group::Group, AttributedTo, Endpoints, LanguageTag},
-    ImageObject,
-    Source,
+    ImageObject, Source,
   },
 };
 use activitypub_federation::{
@@ -19,13 +18,8 @@ use chrono::{DateTime, Utc};
 use lemmy_api_common::{
   context::LemmyContext,
   utils::{
-    generate_featured_url,
-    generate_moderators_url,
-    generate_outbox_url,
-    get_url_blocklist,
-    local_site_opt_to_slur_regex,
-    process_markdown_opt,
-    proxy_image_link_opt_apub,
+    generate_featured_url, generate_moderators_url, generate_outbox_url, get_url_blocklist,
+    local_site_opt_to_slur_regex, process_markdown_opt, proxy_image_link_opt_apub,
   },
 };
 use lemmy_db_schema::{
@@ -252,8 +246,7 @@ impl GetActorType for ApubCommunity {
 pub(crate) mod tests {
   use super::*;
   use crate::{
-    objects::instance::tests::parse_lemmy_instance,
-    protocol::tests::file_to_json_object,
+    objects::instance::tests::parse_lemmy_instance, protocol::tests::file_to_json_object,
   };
   use activitypub_federation::fetch::collection_id::CollectionId;
   use lemmy_db_schema::source::site::Site;

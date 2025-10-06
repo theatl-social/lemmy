@@ -384,3 +384,200 @@ pub async fn privileged_register(
 // TODO: Add integration tests
 // Note: Unit tests removed due to complexity of mocking LemmyContext
 // Test manually or via integration test suite
+  use lemmy_db_schema::{
+    source::{
+      instance::Instance,
+      local_site::{LocalSite, LocalSiteInsertForm},
+      secret::Secret,
+      site::{Site, SiteInsertForm},
+    },
+    traits::Crud,
+    utils::build_db_pool_for_tests,
+    RegistrationMode,
+  };
+  use lemmy_utils::rate_limit::RateLimitCell;
+  use reqwest::Client;
+  use reqwest_middleware::ClientBuilder;
+  use serial_test::serial;
+
+  async fn setup_test_context(secret: Option<String>) -> (LemmyContext, Instance, Site, LocalSite) {
+    let pool = build_db_pool_for_tests().await;
+    let pool_ref = &mut (&pool).into();
+
+    let db_secret = Secret::init(pool_ref).await.unwrap().unwrap();
+
+    // Create test settings with optional private_api_secret
+    let mut settings = lemmy_utils::settings::SETTINGS.clone();
+    if let Some(s) = secret {
+      settings.private_api_secret = Some(s);
+    }
+
+    let context = LemmyContext {
+      pool: pool.clone(),
+      client: ClientBuilder::new(Client::default()).build(),
+      secret: db_secret,
+      settings: std::sync::Arc::new(settings),
+      rate_limit_cell: RateLimitCell::with_test_config(),
+    };
+
+    let instance = Instance::read_or_create(pool_ref, "test_instance".to_string())
+      .await
+      .unwrap();
+
+    let site_form = SiteInsertForm::new("test site".to_string(), instance.id);
+    let site = Site::create(pool_ref, &site_form).await.unwrap();
+
+    let local_site_form = LocalSiteInsertForm::builder()
+      .site_id(site.id)
+      .registration_mode(Some(RegistrationMode::Closed))
+      .build();
+    let local_site = LocalSite::create(pool_ref, &local_site_form).await.unwrap();
+
+    (context, instance, site, local_site)
+  }
+
+  #[tokio::test]
+  #[serial]
+  async fn test_privileged_register_success() {
+    let secret = "test_secret_123".to_string();
+    let (context, _, _, _) = setup_test_context(Some(secret.clone())).await;
+
+    let req = TestRequest::default().to_http_request();
+    let data = Json(PrivilegedRegister {
+      username: "testuser".to_string(),
+      password: "ValidPassword123!".to_string().into(),
+      email: "test@example.com".to_string().into(),
+      api_secret: secret.into(),
+    });
+
+    let result = privileged_register(data, req, context.into()).await;
+    assert!(result.is_ok());
+
+    let response = result.unwrap().into_inner();
+    assert!(response.jwt.is_some());
+    assert!(!response.registration_created);
+    assert!(!response.verify_email_sent);
+  }
+
+  #[tokio::test]
+  #[serial]
+  async fn test_privileged_register_invalid_secret() {
+    let secret = "correct_secret".to_string();
+    let (context, _, _, _) = setup_test_context(Some(secret)).await;
+
+    let req = TestRequest::default().to_http_request();
+    let data = Json(PrivilegedRegister {
+      username: "testuser".to_string(),
+      password: "ValidPassword123!".to_string().into(),
+      email: "test@example.com".to_string().into(),
+      api_secret: "wrong_secret".to_string().into(),
+    });
+
+    let result = privileged_register(data, req, context.into()).await;
+    assert!(result.is_err());
+    assert_eq!(
+      result.unwrap_err().error_type,
+      LemmyErrorType::IncorrectLogin
+    );
+  }
+
+  #[tokio::test]
+  #[serial]
+  async fn test_privileged_register_no_secret_configured() {
+    let (context, _, _, _) = setup_test_context(None).await;
+
+    let req = TestRequest::default().to_http_request();
+    let data = Json(PrivilegedRegister {
+      username: "testuser".to_string(),
+      password: "ValidPassword123!".to_string().into(),
+      email: "test@example.com".to_string().into(),
+      api_secret: "any_secret".to_string().into(),
+    });
+
+    let result = privileged_register(data, req, context.into()).await;
+    assert!(result.is_err());
+    assert_eq!(
+      result.unwrap_err().error_type,
+      LemmyErrorType::PrivateApiSecretNotConfigured
+    );
+  }
+
+  #[tokio::test]
+  #[serial]
+  async fn test_privileged_register_bypasses_registration_mode() {
+    let secret = "test_secret_123".to_string();
+    let (context, _, _, local_site) = setup_test_context(Some(secret.clone())).await;
+
+    // Verify registration is closed
+    assert_eq!(local_site.registration_mode, RegistrationMode::Closed);
+
+    let req = TestRequest::default().to_http_request();
+    let data = Json(PrivilegedRegister {
+      username: "testuser2".to_string(),
+      password: "ValidPassword123!".to_string().into(),
+      email: "test2@example.com".to_string().into(),
+      api_secret: secret.into(),
+    });
+
+    // Should succeed despite closed registration
+    let result = privileged_register(data, req, context.into()).await;
+    assert!(result.is_ok());
+  }
+
+  #[tokio::test]
+  #[serial]
+  async fn test_privileged_register_invalid_password() {
+    let secret = "test_secret_123".to_string();
+    let (context, _, _, _) = setup_test_context(Some(secret.clone())).await;
+
+    let req = TestRequest::default().to_http_request();
+    let data = Json(PrivilegedRegister {
+      username: "testuser".to_string(),
+      password: "short".to_string().into(), // Too short
+      email: "test@example.com".to_string().into(),
+      api_secret: secret.into(),
+    });
+
+    let result = privileged_register(data, req, context.into()).await;
+    assert!(result.is_err());
+    assert_eq!(
+      result.unwrap_err().error_type,
+      LemmyErrorType::InvalidPassword
+    );
+  }
+
+  #[tokio::test]
+  #[serial]
+  async fn test_privileged_register_duplicate_email() {
+    let secret = "test_secret_123".to_string();
+    let (context, _, _, _) = setup_test_context(Some(secret.clone())).await;
+
+    let email = "duplicate@example.com".to_string();
+
+    // First registration
+    let req1 = TestRequest::default().to_http_request();
+    let data1 = Json(PrivilegedRegister {
+      username: "user1".to_string(),
+      password: "ValidPassword123!".to_string().into(),
+      email: email.clone().into(),
+      api_secret: secret.clone().into(),
+    });
+    let result1 = privileged_register(data1, req1, context.clone().into()).await;
+    assert!(result1.is_ok());
+
+    // Second registration with same email should fail
+    let req2 = TestRequest::default().to_http_request();
+    let data2 = Json(PrivilegedRegister {
+      username: "user2".to_string(),
+      password: "ValidPassword123!".to_string().into(),
+      email: email.into(),
+      api_secret: secret.into(),
+    });
+    let result2 = privileged_register(data2, req2, Data::new(context)).await;
+    assert!(result2.is_err());
+    assert_eq!(
+      result2.unwrap_err().error_type,
+      LemmyErrorType::EmailAlreadyExists
+    );
+  }
+}

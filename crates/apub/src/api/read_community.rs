@@ -7,9 +7,7 @@ use lemmy_api_common::{
   utils::{check_private_instance, is_mod_or_admin_opt, read_site_for_actor},
 };
 use lemmy_db_schema::source::{
-  actor_language::CommunityLanguage,
-  community::Community,
-  local_site::LocalSite,
+  actor_language::CommunityLanguage, community::Community, local_site::LocalSite,
 };
 use lemmy_db_views::structs::LocalUserView;
 use lemmy_db_views_actor::structs::{CommunityModeratorView, CommunityView};

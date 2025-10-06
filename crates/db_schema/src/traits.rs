@@ -13,8 +13,7 @@ use diesel::{
 };
 use diesel_async::{
   methods::{ExecuteDsl, LoadQuery},
-  AsyncPgConnection,
-  RunQueryDsl,
+  AsyncPgConnection, RunQueryDsl,
 };
 
 /// Returned by `diesel::delete`

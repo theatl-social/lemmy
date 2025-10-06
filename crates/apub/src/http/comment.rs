@@ -1,8 +1,6 @@
 use crate::{
   http::{
-    check_community_public,
-    create_apub_response,
-    create_apub_tombstone_response,
+    check_community_public, create_apub_response, create_apub_tombstone_response,
     redirect_remote_object,
   },
   objects::comment::ApubComment,

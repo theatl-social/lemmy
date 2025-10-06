@@ -4,12 +4,8 @@ use crate::{
   schema::{community_language, local_site, local_user_language, site, site_language},
   source::{
     actor_language::{
-      CommunityLanguage,
-      CommunityLanguageForm,
-      LocalUserLanguage,
-      LocalUserLanguageForm,
-      SiteLanguage,
-      SiteLanguageForm,
+      CommunityLanguage, CommunityLanguageForm, LocalUserLanguage, LocalUserLanguageForm,
+      SiteLanguage, SiteLanguageForm,
     },
     language::Language,
     site::Site,
@@ -21,15 +17,10 @@ use diesel::{
   dsl::{count, exists},
   insert_into,
   result::Error,
-  select,
-  ExpressionMethods,
-  QueryDsl,
+  select, ExpressionMethods, QueryDsl,
 };
 use diesel_async::{
-  scoped_futures::ScopedFutureExt,
-  AsyncConnection,
-  AsyncPgConnection,
-  RunQueryDsl,
+  scoped_futures::ScopedFutureExt, AsyncConnection, AsyncPgConnection, RunQueryDsl,
 };
 use lemmy_utils::error::{LemmyErrorType, LemmyResult};
 use tokio::sync::OnceCell;
@@ -225,9 +216,7 @@ impl CommunityLanguage {
     for_instance_id: InstanceId,
   ) -> Result<(), Error> {
     use crate::schema::{
-      community::dsl as c,
-      community_language::dsl as cl,
-      site_language::dsl as sl,
+      community::dsl as c, community_language::dsl as cl, site_language::dsl as sl,
     };
     let community_languages: Vec<LanguageId> = cl::community_language
       .left_outer_join(sl::site_language.on(cl::language_id.eq(sl::language_id)))

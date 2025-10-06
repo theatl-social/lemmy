@@ -7,11 +7,7 @@ use lemmy_db_schema::{
   schema::{local_user, local_user_vote_display_mode, person, person_aggregates},
   utils::{
     functions::{coalesce, lower},
-    DbConn,
-    DbPool,
-    ListFn,
-    Queries,
-    ReadFn,
+    DbConn, DbPool, ListFn, Queries, ReadFn,
   },
 };
 use lemmy_utils::error::{LemmyError, LemmyErrorType};

@@ -6,13 +6,8 @@ use lemmy_api_common::{
   context::LemmyContext,
   send_activity::{ActivityChannel, SendActivityData},
   utils::{
-    check_comment_depth,
-    check_community_user_action,
-    check_post_deleted_or_removed,
-    get_url_blocklist,
-    is_mod_or_admin,
-    local_site_to_slur_regex,
-    process_markdown,
+    check_comment_depth, check_community_user_action, check_post_deleted_or_removed,
+    get_url_blocklist, is_mod_or_admin, local_site_to_slur_regex, process_markdown,
     update_read_comments,
   },
 };

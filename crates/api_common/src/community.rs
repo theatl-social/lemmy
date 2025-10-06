@@ -1,9 +1,7 @@
 use lemmy_db_schema::{
   newtypes::{CommunityId, LanguageId, PersonId},
   source::site::Site,
-  CommunityVisibility,
-  ListingType,
-  SortType,
+  CommunityVisibility, ListingType, SortType,
 };
 use lemmy_db_views_actor::structs::{CommunityModeratorView, CommunityView, PersonView};
 use serde::{Deserialize, Serialize};

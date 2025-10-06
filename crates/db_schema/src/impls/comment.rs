@@ -3,12 +3,7 @@ use crate::{
   newtypes::{CommentId, DbUrl, PersonId},
   schema::comment,
   source::comment::{
-    Comment,
-    CommentInsertForm,
-    CommentLike,
-    CommentLikeForm,
-    CommentSaved,
-    CommentSavedForm,
+    Comment, CommentInsertForm, CommentLike, CommentLikeForm, CommentSaved, CommentSavedForm,
     CommentUpdateForm,
   },
   traits::{Crud, Likeable, Saveable},
@@ -204,12 +199,7 @@ mod tests {
     newtypes::LanguageId,
     source::{
       comment::{
-        Comment,
-        CommentInsertForm,
-        CommentLike,
-        CommentLikeForm,
-        CommentSaved,
-        CommentSavedForm,
+        Comment, CommentInsertForm, CommentLike, CommentLikeForm, CommentSaved, CommentSavedForm,
         CommentUpdateForm,
       },
       community::{Community, CommunityInsertForm},

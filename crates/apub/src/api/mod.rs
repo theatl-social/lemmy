@@ -1,8 +1,7 @@
 use lemmy_db_schema::{
   newtypes::CommunityId,
   source::{local_site::LocalSite, local_user::LocalUser},
-  ListingType,
-  SortType,
+  ListingType, SortType,
 };
 
 pub mod list_comments;

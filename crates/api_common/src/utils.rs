@@ -34,9 +34,7 @@ use lemmy_db_views::{
   structs::{LocalImageView, LocalUserView},
 };
 use lemmy_db_views_actor::structs::{
-  CommunityModeratorView,
-  CommunityPersonBanView,
-  CommunityView,
+  CommunityModeratorView, CommunityPersonBanView, CommunityView,
 };
 use lemmy_utils::{
   email::{send_email, translations::Lang},
@@ -49,8 +47,7 @@ use lemmy_utils::{
     slurs::{build_slur_regex, remove_slurs},
     validation::clean_urls_in_text,
   },
-  CACHE_DURATION_FEDERATION,
-  MAX_COMMENT_DEPTH_LIMIT,
+  CACHE_DURATION_FEDERATION, MAX_COMMENT_DEPTH_LIMIT,
 };
 use moka::future::Cache;
 use regex::{escape, Regex, RegexSet};

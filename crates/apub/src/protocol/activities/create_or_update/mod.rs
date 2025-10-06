@@ -6,9 +6,7 @@ pub mod page;
 mod tests {
   use crate::protocol::{
     activities::create_or_update::{
-      chat_message::CreateOrUpdateChatMessage,
-      note::CreateOrUpdateNote,
-      page::CreateOrUpdatePage,
+      chat_message::CreateOrUpdateChatMessage, note::CreateOrUpdateNote, page::CreateOrUpdatePage,
     },
     tests::test_parse_lemmy_item,
   };

@@ -5,10 +5,7 @@ use lemmy_api_common::{
   person::SaveUserSettings,
   request::replace_image,
   utils::{
-    get_url_blocklist,
-    local_site_to_slur_regex,
-    process_markdown_opt,
-    proxy_image_link_opt_api,
+    get_url_blocklist, local_site_to_slur_regex, process_markdown_opt, proxy_image_link_opt_api,
     send_verification_email,
   },
   SuccessResponse,

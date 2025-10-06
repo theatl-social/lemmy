@@ -1,8 +1,6 @@
 use crate::protocol::{objects::page::Attachment, Source};
 use activitypub_federation::{
-  config::Data,
-  fetch::object_id::ObjectId,
-  protocol::values::MediaTypeMarkdownOrHtml,
+  config::Data, fetch::object_id::ObjectId, protocol::values::MediaTypeMarkdownOrHtml,
   traits::Object,
 };
 use anyhow::anyhow;

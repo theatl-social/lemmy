@@ -1,6 +1,5 @@
 use crate::{
-  http::create_apub_response,
-  objects::instance::ApubSite,
+  http::create_apub_response, objects::instance::ApubSite,
   protocol::collections::empty_outbox::EmptyOutbox,
 };
 use activitypub_federation::{config::Data, traits::Object};

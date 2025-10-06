@@ -1,16 +1,14 @@
 use crate::{
   check_apub_id_valid_with_strictness,
   collections::{
-    community_featured::ApubCommunityFeatured,
-    community_follower::ApubCommunityFollower,
+    community_featured::ApubCommunityFeatured, community_follower::ApubCommunityFollower,
     community_outbox::ApubCommunityOutbox,
   },
   local_site_data_cached,
   objects::{community::ApubCommunity, read_from_string_or_source_opt},
   protocol::{
     objects::{AttributedTo, Endpoints, LanguageTag},
-    ImageObject,
-    Source,
+    ImageObject, Source,
   },
 };
 use activitypub_federation::{
@@ -18,9 +16,7 @@ use activitypub_federation::{
   fetch::{collection_id::CollectionId, object_id::ObjectId},
   kinds::actor::GroupType,
   protocol::{
-    helpers::deserialize_skip_error,
-    public_key::PublicKey,
-    verification::verify_domains_match,
+    helpers::deserialize_skip_error, public_key::PublicKey, verification::verify_domains_match,
   },
 };
 use chrono::{DateTime, Utc};

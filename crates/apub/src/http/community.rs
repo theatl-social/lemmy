@@ -1,10 +1,8 @@
 use crate::{
   activity_lists::GroupInboxActivities,
   collections::{
-    community_featured::ApubCommunityFeatured,
-    community_follower::ApubCommunityFollower,
-    community_moderators::ApubCommunityModerators,
-    community_outbox::ApubCommunityOutbox,
+    community_featured::ApubCommunityFeatured, community_follower::ApubCommunityFollower,
+    community_moderators::ApubCommunityModerators, community_outbox::ApubCommunityOutbox,
   },
   http::{check_community_public, create_apub_response, create_apub_tombstone_response},
   objects::{community::ApubCommunity, person::ApubPerson},
@@ -17,8 +15,7 @@ use activitypub_federation::{
 };
 use actix_web::{
   web::{Bytes, Path},
-  HttpRequest,
-  HttpResponse,
+  HttpRequest, HttpResponse,
 };
 use lemmy_api_common::context::LemmyContext;
 use lemmy_db_schema::{source::community::Community, traits::ApubActor};

@@ -2,51 +2,31 @@ use crate::{
   diesel::{DecoratableTarget, OptionalExtension},
   newtypes::{CommunityId, DbUrl, PersonId},
   schema::{
-    community,
-    community_follower,
-    community_moderator,
-    community_person_ban,
-    instance,
-    post,
+    community, community_follower, community_moderator, community_person_ban, instance, post,
   },
   source::{
     actor_language::CommunityLanguage,
     community::{
-      Community,
-      CommunityFollower,
-      CommunityFollowerForm,
-      CommunityInsertForm,
-      CommunityModerator,
-      CommunityModeratorForm,
-      CommunityPersonBan,
-      CommunityPersonBanForm,
-      CommunityUpdateForm,
+      Community, CommunityFollower, CommunityFollowerForm, CommunityInsertForm, CommunityModerator,
+      CommunityModeratorForm, CommunityPersonBan, CommunityPersonBanForm, CommunityUpdateForm,
     },
     post::Post,
   },
   traits::{ApubActor, Bannable, Crud, Followable, Joinable},
   utils::{
     functions::{coalesce, lower},
-    get_conn,
-    DbPool,
+    get_conn, DbPool,
   },
   SubscribedType,
 };
 use chrono::{DateTime, Utc};
 use diesel::{
-  deserialize,
-  dsl,
+  deserialize, dsl,
   dsl::{exists, insert_into},
   pg::Pg,
   result::Error,
-  select,
-  sql_types,
-  update,
-  BoolExpressionMethods,
-  ExpressionMethods,
-  NullableExpressionMethods,
-  QueryDsl,
-  Queryable,
+  select, sql_types, update, BoolExpressionMethods, ExpressionMethods, NullableExpressionMethods,
+  QueryDsl, Queryable,
 };
 use diesel_async::RunQueryDsl;
 use lemmy_utils::error::{LemmyErrorType, LemmyResult};
@@ -437,14 +417,8 @@ mod tests {
   use crate::{
     source::{
       community::{
-        Community,
-        CommunityFollower,
-        CommunityFollowerForm,
-        CommunityInsertForm,
-        CommunityModerator,
-        CommunityModeratorForm,
-        CommunityPersonBan,
-        CommunityPersonBanForm,
+        Community, CommunityFollower, CommunityFollowerForm, CommunityInsertForm,
+        CommunityModerator, CommunityModeratorForm, CommunityPersonBan, CommunityPersonBanForm,
         CommunityUpdateForm,
       },
       instance::Instance,

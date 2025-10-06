@@ -1,16 +1,14 @@
 use super::verify_is_remote_object;
 use crate::{
   activities::GetActorType,
-  check_apub_id_valid_with_strictness,
-  local_site_data_cached,
+  check_apub_id_valid_with_strictness, local_site_data_cached,
   objects::{instance::fetch_instance_actor_for_object, read_from_string_or_source_opt},
   protocol::{
     objects::{
       person::{Person, UserTypes},
       Endpoints,
     },
-    ImageObject,
-    Source,
+    ImageObject, Source,
   },
 };
 use activitypub_federation::{
@@ -22,10 +20,7 @@ use chrono::{DateTime, Utc};
 use lemmy_api_common::{
   context::LemmyContext,
   utils::{
-    generate_outbox_url,
-    get_url_blocklist,
-    local_site_opt_to_slur_regex,
-    process_markdown_opt,
+    generate_outbox_url, get_url_blocklist, local_site_opt_to_slur_regex, process_markdown_opt,
     proxy_image_link_opt_apub,
   },
 };

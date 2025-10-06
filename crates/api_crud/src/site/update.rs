@@ -7,12 +7,8 @@ use lemmy_api_common::{
   request::replace_image,
   site::{EditSite, SiteResponse},
   utils::{
-    get_url_blocklist,
-    is_admin,
-    local_site_rate_limit_to_rate_limit_config,
-    local_site_to_slur_regex,
-    process_markdown_opt,
-    proxy_image_link_opt_api,
+    get_url_blocklist, is_admin, local_site_rate_limit_to_rate_limit_config,
+    local_site_to_slur_regex, process_markdown_opt, proxy_image_link_opt_api,
   },
 };
 use lemmy_db_schema::{
@@ -37,11 +33,8 @@ use lemmy_utils::{
   utils::{
     slurs::check_slurs_opt,
     validation::{
-      build_and_check_regex,
-      check_urls_are_valid,
-      is_valid_body_field,
-      site_description_length_check,
-      site_name_length_check,
+      build_and_check_regex, check_urls_are_valid, is_valid_body_field,
+      site_description_length_check, site_name_length_check,
     },
   },
 };

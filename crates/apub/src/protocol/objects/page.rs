@@ -4,9 +4,7 @@ use crate::{
   objects::{community::ApubCommunity, person::ApubPerson, post::ApubPost},
   protocol::{
     objects::{AttributedTo, LanguageTag},
-    ImageObject,
-    InCommunity,
-    Source,
+    ImageObject, InCommunity, Source,
   },
 };
 use activitypub_federation::{

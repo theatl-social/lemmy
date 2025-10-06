@@ -1,8 +1,5 @@
 use crate::objects::{
-  comment::ApubComment,
-  community::ApubCommunity,
-  person::ApubPerson,
-  post::ApubPost,
+  comment::ApubComment, community::ApubCommunity, person::ApubPerson, post::ApubPost,
 };
 use activitypub_federation::{config::Data, fetch::object_id::ObjectId, traits::Object};
 use actix_web::web::Json;

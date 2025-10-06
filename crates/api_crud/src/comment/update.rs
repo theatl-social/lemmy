@@ -6,10 +6,7 @@ use lemmy_api_common::{
   context::LemmyContext,
   send_activity::{ActivityChannel, SendActivityData},
   utils::{
-    check_community_user_action,
-    get_url_blocklist,
-    local_site_to_slur_regex,
-    process_markdown_opt,
+    check_community_user_action, get_url_blocklist, local_site_to_slur_regex, process_markdown_opt,
   },
 };
 use lemmy_db_schema::{
