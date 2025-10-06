@@ -75,6 +75,8 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Check our changes compile
+        env:
+          RUSTFLAGS: ""
         run: |
           echo "Checking private API modules..."
           cargo check -p lemmy_api --lib
