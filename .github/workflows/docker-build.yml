@@ -2,10 +2,21 @@ name: Build Docker Images
 
 on:
   push:
-    branches: [ "v0.19.13-theatl" ]
+    branches: [ "forked-main", "v0.19.13-theatl" ]
     tags: [ "v*" ]
   pull_request:
-    branches: [ "v0.19.13-theatl" ]
+    branches: [ "forked-main", "v0.19.13-theatl" ]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build from'
+        required: true
+        default: 'forked-main'
+        type: choice
+        options:
+          - forked-main
+          - v0.19.13-theatl
+          - 20251003/add-login-hook
 
 env:
   REGISTRY: ghcr.io
