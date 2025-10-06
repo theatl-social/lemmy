@@ -23,7 +23,7 @@ pub async fn check_email_registered(
   // Use constant-time comparison to prevent timing attacks
   let is_valid = configured_secret
     .as_bytes()
-    .ct_eq(data.api_secret.as_ref().as_bytes())
+    .ct_eq(data.api_secret.as_ref())
     .into();
 
   if !is_valid {
