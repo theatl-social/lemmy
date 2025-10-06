@@ -3,7 +3,9 @@ use lemmy_api_common::{
   context::LemmyContext,
   person::VerifyEmail,
   utils::{
-    get_interface_language_from_settings, send_email_to_user, send_new_applicant_email_to_admins,
+    get_interface_language_from_settings,
+    send_email_to_user,
+    send_new_applicant_email_to_admins,
   },
   SuccessResponse,
 };

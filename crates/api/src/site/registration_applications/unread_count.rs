@@ -1,7 +1,9 @@
 use activitypub_federation::config::Data;
 use actix_web::web::Json;
 use lemmy_api_common::{
-  context::LemmyContext, site::GetUnreadRegistrationApplicationCountResponse, utils::is_admin,
+  context::LemmyContext,
+  site::GetUnreadRegistrationApplicationCountResponse,
+  utils::is_admin,
 };
 use lemmy_db_schema::source::local_site::LocalSite;
 use lemmy_db_views::structs::{LocalUserView, RegistrationApplicationView};

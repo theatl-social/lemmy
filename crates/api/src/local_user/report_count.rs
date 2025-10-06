@@ -5,7 +5,10 @@ use lemmy_api_common::{
   utils::check_community_mod_of_any_or_admin_action,
 };
 use lemmy_db_views::structs::{
-  CommentReportView, LocalUserView, PostReportView, PrivateMessageReportView,
+  CommentReportView,
+  LocalUserView,
+  PostReportView,
+  PrivateMessageReportView,
 };
 use lemmy_utils::error::LemmyResult;
 
