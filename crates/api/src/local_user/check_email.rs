@@ -140,7 +140,7 @@ mod tests {
       email: email.clone().into(),
       api_secret: secret.clone().into(),
     });
-    privileged_register(register_data, req, context.clone().into(.clone()))
+    privileged_register(register_data, req, context.clone().into())
       .await
       .unwrap();
 
@@ -210,7 +210,7 @@ mod tests {
       email: "case@example.com".to_string().into(),
       api_secret: secret.clone().into(),
     });
-    privileged_register(register_data, req, context.clone().into(.clone()))
+    privileged_register(register_data, req, context.clone().into())
       .await
       .unwrap();
 
