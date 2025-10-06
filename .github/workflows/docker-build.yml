@@ -88,7 +88,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: LemmyNet/lemmy-ui
-          ref: main
+          ref: 0.19.5
           path: lemmy-ui
 
       - name: Set up Docker Buildx
