@@ -72,6 +72,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64
+          build-args: |
+            RUST_RELEASE_MODE=release
 
   build-lemmy-ui:
     name: Build Lemmy UI
