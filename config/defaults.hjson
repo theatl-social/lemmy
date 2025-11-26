@@ -127,6 +127,11 @@
     # Set this to a higher value than 1 (e.g. 6) only if you have a huge instance (>10 activities
     # per second) and if a receiving instance is not keeping up.
     concurrent_sends_per_instance: 1
+    # Timeout in seconds for processing incoming federation activities.
+    # If processing takes longer than this, the request will fail with InboxTimeout.
+    # Increase this value if you see frequent InboxTimeout errors in logs,
+    # which can happen with slow database or high network latency.
+    incoming_activity_timeout: 30
   }
   prometheus: {
     bind: "127.0.0.1"

@@ -31,8 +31,6 @@ mod post;
 pub mod routes;
 pub mod site;
 
-const INCOMING_ACTIVITY_TIMEOUT: Duration = Duration::from_secs(9);
-
 pub async fn shared_inbox(
   request: HttpRequest,
   body: Bytes,
@@ -40,11 +38,13 @@ pub async fn shared_inbox(
 ) -> LemmyResult<HttpResponse> {
   let receive_fut =
     receive_activity::<SharedInboxActivities, UserOrCommunity, LemmyContext>(request, body, &data);
-  // Set a timeout shorter than `REQWEST_TIMEOUT` for processing incoming activities. This is to
-  // avoid taking a long time to process an incoming activity when a required data fetch times out.
-  // In this case our own instance would timeout and be marked as dead by the sender. Better to
-  // consider the activity broken and move on.
-  timeout(INCOMING_ACTIVITY_TIMEOUT, receive_fut)
+  // Use configurable timeout for processing incoming activities. This allows administrators
+  // to tune the timeout based on their infrastructure (database latency, network conditions, etc.).
+  // If processing takes longer than this timeout, we return early with an InboxTimeout error
+  // to avoid being marked as dead by the sender.
+  let timeout_secs = data.settings().federation.incoming_activity_timeout;
+  let activity_timeout = Duration::from_secs(timeout_secs);
+  timeout(activity_timeout, receive_fut)
     .await
     .map_err(|_| LemmyErrorType::InboxTimeout)?
 }
