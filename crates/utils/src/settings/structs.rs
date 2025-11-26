@@ -270,4 +270,10 @@ pub struct FederationWorkerConfig {
   /// per second) and if a receiving instance is not keeping up.
   #[default(1)]
   pub concurrent_sends_per_instance: i8,
+  /// Timeout in seconds for processing incoming federation activities.
+  /// If processing takes longer than this, the request will fail with InboxTimeout.
+  /// Increase this value if you see frequent InboxTimeout errors in logs,
+  /// which can happen with slow database or high network latency.
+  #[default(30)]
+  pub incoming_activity_timeout: u64,
 }
