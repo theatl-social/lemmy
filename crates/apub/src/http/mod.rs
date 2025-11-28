@@ -64,14 +64,26 @@ pub async fn shared_inbox(
   let activity_timeout = Duration::from_secs(timeout_secs);
   timeout(activity_timeout, receive_fut).await.map_err(|_| {
     // Only parse the activity body when a timeout occurs to avoid overhead on successful requests.
-    let debug_info: ActivityDebugInfo = serde_json::from_slice(&body_for_debug).unwrap_or_default();
-    warn!(
-      activity_id = ?debug_info.id,
-      activity_type = ?debug_info.activity_type,
-      actor = ?debug_info.actor,
-      timeout_secs = timeout_secs,
-      "Inbox activity processing timed out. Consider increasing federation.incoming_activity_timeout if this happens frequently."
-    );
+    match serde_json::from_slice::<ActivityDebugInfo>(&body_for_debug) {
+      Ok(debug_info) => {
+        warn!(
+          activity_id = ?debug_info.id,
+          activity_type = ?debug_info.activity_type,
+          actor = ?debug_info.actor,
+          timeout_secs = timeout_secs,
+          "Inbox activity processing timed out after {} seconds. Consider increasing federation.incoming_activity_timeout if this happens frequently.",
+          timeout_secs
+        );
+      }
+      Err(parse_error) => {
+        warn!(
+          timeout_secs = timeout_secs,
+          parse_error = %parse_error,
+          "Inbox activity processing timed out after {} seconds, and activity body could not be parsed for debugging. Consider increasing federation.incoming_activity_timeout if this happens frequently.",
+          timeout_secs
+        );
+      }
+    }
     LemmyErrorType::InboxTimeout
   })?
 }
