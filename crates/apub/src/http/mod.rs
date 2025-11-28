@@ -50,9 +50,9 @@ pub async fn shared_inbox(
   body: Bytes,
   data: Data<LemmyContext>,
 ) -> LemmyResult<HttpResponse> {
-  // Extract debug info from the activity body before processing.
-  // This allows us to log meaningful information if a timeout occurs.
-  let debug_info: ActivityDebugInfo = serde_json::from_slice(&body).unwrap_or_default();
+  // Clone the body for potential debug logging on timeout.
+  // Bytes is reference-counted, so this is cheap.
+  let body_for_debug = body.clone();
 
   let receive_fut =
     receive_activity::<SharedInboxActivities, UserOrCommunity, LemmyContext>(request, body, &data);
@@ -63,6 +63,8 @@ pub async fn shared_inbox(
   let timeout_secs = data.settings().federation.incoming_activity_timeout;
   let activity_timeout = Duration::from_secs(timeout_secs);
   timeout(activity_timeout, receive_fut).await.map_err(|_| {
+    // Only parse the activity body when a timeout occurs to avoid overhead on successful requests.
+    let debug_info: ActivityDebugInfo = serde_json::from_slice(&body_for_debug).unwrap_or_default();
     warn!(
       activity_id = ?debug_info.id,
       activity_type = ?debug_info.activity_type,
