@@ -22,6 +22,7 @@ use lemmy_utils::error::{LemmyErrorType, LemmyResult};
 use serde::{Deserialize, Serialize};
 use std::{ops::Deref, time::Duration};
 use tokio::time::timeout;
+use tracing::warn;
 use url::Url;
 
 mod comment;
@@ -31,11 +32,28 @@ mod post;
 pub mod routes;
 pub mod site;
 
+/// Helper struct to extract basic activity info for debugging purposes.
+/// This is used to log meaningful information when an InboxTimeout occurs.
+#[derive(Deserialize, Debug, Default)]
+struct ActivityDebugInfo {
+  /// The activity ID (e.g., "https://example.com/activities/create/123")
+  id: Option<String>,
+  /// The activity type (e.g., "Create", "Announce", "Follow")
+  #[serde(rename = "type")]
+  activity_type: Option<String>,
+  /// The actor who initiated the activity (e.g., "https://example.com/u/user")
+  actor: Option<String>,
+}
+
 pub async fn shared_inbox(
   request: HttpRequest,
   body: Bytes,
   data: Data<LemmyContext>,
 ) -> LemmyResult<HttpResponse> {
+  // Clone the body for potential debug logging on timeout.
+  // Bytes is reference-counted, so this is cheap.
+  let body_for_debug = body.clone();
+
   let receive_fut =
     receive_activity::<SharedInboxActivities, UserOrCommunity, LemmyContext>(request, body, &data);
   // Use configurable timeout for processing incoming activities. This allows administrators
@@ -44,9 +62,30 @@ pub async fn shared_inbox(
   // to avoid being marked as dead by the sender.
   let timeout_secs = data.settings().federation.incoming_activity_timeout;
   let activity_timeout = Duration::from_secs(timeout_secs);
-  timeout(activity_timeout, receive_fut)
-    .await
-    .map_err(|_| LemmyErrorType::InboxTimeout)?
+  timeout(activity_timeout, receive_fut).await.map_err(|_| {
+    // Only parse the activity body when a timeout occurs to avoid overhead on successful requests.
+    match serde_json::from_slice::<ActivityDebugInfo>(&body_for_debug) {
+      Ok(debug_info) => {
+        warn!(
+          activity_id = ?debug_info.id,
+          activity_type = ?debug_info.activity_type,
+          actor = ?debug_info.actor,
+          timeout_secs = timeout_secs,
+          "Inbox activity processing timed out after {} seconds. Consider increasing federation.incoming_activity_timeout if this happens frequently.",
+          timeout_secs
+        );
+      }
+      Err(parse_error) => {
+        warn!(
+          timeout_secs = timeout_secs,
+          parse_error = %parse_error,
+          "Inbox activity processing timed out after {} seconds, and activity body could not be parsed for debugging. Consider increasing federation.incoming_activity_timeout if this happens frequently.",
+          timeout_secs
+        );
+      }
+    }
+    LemmyErrorType::InboxTimeout
+  })?
 }
 
 /// Convert the data to json and turn it into an HTTP Response with the correct ActivityPub
