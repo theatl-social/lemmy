@@ -2,10 +2,10 @@ name: Build Docker Images
 
 on:
   push:
-    branches: [ "forked-main", "v0.19.13-theatl" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
     tags: [ "v*" ]
   pull_request:
-    branches: [ "forked-main", "v0.19.13-theatl" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
   workflow_dispatch:
     inputs:
       branch:
@@ -17,6 +17,7 @@ on:
           - forked-main
           - v0.19.13-theatl
           - 20251003/add-login-hook
+          - 20251202/beta-refactor
 
 env:
   REGISTRY: ghcr.io
@@ -90,7 +91,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: LemmyNet/lemmy-ui
-          ref: 0.19.13
+          ref: 0.19.14-beta.0
           path: lemmy-ui
           submodules: recursive
 

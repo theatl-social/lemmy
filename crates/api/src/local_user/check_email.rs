@@ -21,9 +21,9 @@ pub async fn check_email_registered(
     .ok_or(LemmyErrorType::PrivateApiSecretNotConfigured)?;
 
   // Use constant-time comparison to prevent timing attacks
-  let is_valid = configured_secret
+  let is_valid: bool = configured_secret
     .as_bytes()
-    .ct_eq(data.api_secret.as_ref().as_bytes())
+    .ct_eq(data.api_secret.as_ref())
     .into();
 
   if !is_valid {
@@ -140,7 +140,7 @@ mod tests {
       email: email.clone().into(),
       api_secret: secret.clone().into(),
     });
-    privileged_register(register_data, req, context.clone().into(.clone()))
+    privileged_register(register_data, req, context.clone().into())
       .await
       .unwrap();
 
@@ -210,7 +210,7 @@ mod tests {
       email: "case@example.com".to_string().into(),
       api_secret: secret.clone().into(),
     });
-    privileged_register(register_data, req, context.clone().into(.clone()))
+    privileged_register(register_data, req, context.clone().into())
       .await
       .unwrap();
 
