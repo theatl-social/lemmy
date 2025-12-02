@@ -6,7 +6,7 @@ This directory contains GitHub Actions workflows for continuous integration and 
 
 ### CI (`ci.yml`)
 
-Runs on every push to `v0.19.13-theatl` and `20251003/add-login-hook` branches, and on pull requests to `v0.19.13-theatl`.
+Runs on every push to `v0.19.13-theatl`, `20251003/add-login-hook`, and `20251202/beta-refactor` branches, and on pull requests to `v0.19.13-theatl` and `20251202/beta-refactor`.
 
 **Jobs:**
 
@@ -27,7 +27,7 @@ Runs on every push to `v0.19.13-theatl` and `20251003/add-login-hook` branches, 
 
 4. **Test** (`test`)
    - Runs full test suite with `cargo test`
-   - Uses PostgreSQL 16 service container for database tests
+   - Uses PostgreSQL 17 service container for database tests
    - Tests all workspace packages with all features enabled
    - Uses caching for faster builds
 
