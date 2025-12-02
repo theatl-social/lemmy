@@ -91,7 +91,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: LemmyNet/lemmy-ui
-          ref: 0.19.14-beta.0
+          ref: 0.19.13
           path: lemmy-ui
           submodules: recursive
 
