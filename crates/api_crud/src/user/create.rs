@@ -20,6 +20,7 @@ use lemmy_api_common::{
 use subtle::ConstantTimeEq;
 use lemmy_db_schema::{
   aggregates::structs::PersonAggregates,
+  newtypes::LanguageId,
   source::{
     actor_language::SiteLanguage,
     captcha_answer::{CaptchaAnswer, CheckCaptchaAnswer},
@@ -355,7 +356,7 @@ pub async fn privileged_register(
 
         // Create the local user with privileged settings
         let local_user_form = LocalUserInsertForm {
-          email: Some(tx_data.email.as_ref().to_lowercase()),
+          email: Some(tx_data.email.to_string().to_lowercase()),
           password_encrypted: tx_data.password.to_string(),
           show_nsfw: Some(tx_site.content_warning.is_some()),
           accepted_application: Some(true), // Auto-accept
