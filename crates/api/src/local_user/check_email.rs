@@ -1,3 +1,4 @@
+use activitypub_federation::config::Data;
 use actix_web::web::Json;
 use lemmy_api_common::{
   context::LemmyContext,
@@ -5,15 +6,13 @@ use lemmy_api_common::{
 };
 use lemmy_db_views::structs::LocalUserView;
 use lemmy_utils::error::{LemmyErrorType, LemmyResult};
-use activitypub_federation::config::Data;
+use subtle::ConstantTimeEq;
 
 #[tracing::instrument(skip(context))]
 pub async fn check_email_registered(
   data: Json<CheckEmail>,
   context: Data<LemmyContext>,
 ) -> LemmyResult<Json<CheckEmailResponse>> {
-  use subtle::ConstantTimeEq;
-
   // Validate the API secret first
   let configured_secret = context
     .settings()

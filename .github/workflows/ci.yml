@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "v0.19.13-theatl", "20251003/add-login-hook", "20251202/beta-refactor" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251003/add-login-hook", "20251202/beta-refactor" ]
   pull_request:
-    branches: [ "v0.19.13-theatl", "20251202/beta-refactor" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -23,7 +23,7 @@ jobs:
         with:
           components: rustfmt
 
-      # Note: Upstream 0.19.14-beta.0 has formatting differences, check is non-blocking
+      # Note: Upstream 0.19.14 has formatting differences, check is non-blocking
       - name: Check formatting (warnings only)
         run: cargo fmt --all -- --check || echo "::warning::Formatting differences found (upstream issue)"
 
@@ -105,7 +105,7 @@ jobs:
           cargo check -p lemmy_api_common --lib
           cargo check -p lemmy_utils --lib
 
-  # Note: Full test suite disabled - upstream 0.19.14-beta.0 has TracingMiddleware dependency issue
+  # Note: Full test suite disabled - upstream 0.19.14 has TracingMiddleware dependency issue
   # test:
   #   name: Run Tests
   #   runs-on: ubuntu-latest

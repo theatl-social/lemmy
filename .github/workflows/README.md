@@ -6,7 +6,7 @@ This directory contains GitHub Actions workflows for continuous integration and 
 
 ### CI (`ci.yml`)
 
-Runs on every push to `v0.19.13-theatl`, `20251003/add-login-hook`, and `20251202/beta-refactor` branches, and on pull requests to `v0.19.13-theatl` and `20251202/beta-refactor`.
+Runs on every push to `forked-main`, `v0.19.13-theatl`, `20251003/add-login-hook`, and `20251202/beta-refactor` branches, and on pull requests to `forked-main`, `v0.19.13-theatl`, and `20251202/beta-refactor`.
 
 **Jobs:**
 
@@ -45,7 +45,7 @@ Runs on every push to `v0.19.13-theatl`, `20251003/add-login-hook`, and `2025120
 Add these to your README.md to show CI status:
 
 ```markdown
-![CI](https://github.com/theatl-social/lemmy/workflows/CI/badge.svg?branch=v0.19.13-theatl)
+![CI](https://github.com/theatl-social/lemmy/workflows/CI/badge.svg?branch=forked-main)
 ```
 
 ## Local Development

@@ -76,4 +76,4 @@ jobs:
             RUST_RELEASE_MODE=release
 
   # Note: lemmy-ui build removed - use official dessalines/lemmy-ui:0.19.13 image
-  # The UI 0.19.13 is API-compatible with backend 0.19.14-beta.0
+  # The UI 0.19.13 is API-compatible with backend 0.19.14
