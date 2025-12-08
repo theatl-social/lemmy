@@ -1,0 +1,79 @@
+name: Build Docker Images
+
+on:
+  push:
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build from'
+        required: true
+        default: 'forked-main'
+        type: choice
+        options:
+          - forked-main
+          - v0.19.13-theatl
+          - 20251003/add-login-hook
+          - 20251202/beta-refactor
+
+env:
+  REGISTRY: ghcr.io
+  LEMMY_IMAGE_NAME: lemmy
+
+jobs:
+  build-lemmy:
+    name: Build Lemmy Backend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.LEMMY_IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Lemmy Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          build-args: |
+            RUST_RELEASE_MODE=release
+
+  # Note: lemmy-ui build removed - use official dessalines/lemmy-ui:0.19.13 image
+  # The UI 0.19.13 is API-compatible with backend 0.19.14-beta.0
