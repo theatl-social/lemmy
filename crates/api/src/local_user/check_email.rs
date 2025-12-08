@@ -13,7 +13,6 @@ pub async fn check_email_registered(
   data: Json<CheckEmail>,
   context: Data<LemmyContext>,
 ) -> LemmyResult<Json<CheckEmailResponse>> {
-
   // Validate the API secret first
   let configured_secret = context
     .settings()

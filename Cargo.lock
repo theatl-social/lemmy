@@ -3056,7 +3056,7 @@ checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
 
 [[package]]
 name = "lemmy_api"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "actix-web",
@@ -3088,7 +3088,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_api_common"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "actix-web",
@@ -3127,7 +3127,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_api_crud"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "accept-language",
  "activitypub_federation",
@@ -3151,7 +3151,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_apub"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "actix-web",
@@ -3188,7 +3188,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_db_perf"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "anyhow",
  "clap",
@@ -3203,7 +3203,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_db_schema"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "anyhow",
@@ -3242,7 +3242,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_db_views"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "actix-web",
  "chrono",
@@ -3264,7 +3264,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_db_views_actor"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "chrono",
  "diesel",
@@ -3284,7 +3284,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_db_views_moderator"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "diesel",
  "diesel-async",
@@ -3296,7 +3296,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_federate"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "actix-web",
@@ -3327,7 +3327,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_routes"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "actix-web",
@@ -3351,7 +3351,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_server"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "activitypub_federation",
  "actix-cors",
@@ -3397,7 +3397,7 @@ dependencies = [
 
 [[package]]
 name = "lemmy_utils"
-version = "0.19.13"
+version = "0.19.14"
 dependencies = [
  "actix-web",
  "anyhow",
