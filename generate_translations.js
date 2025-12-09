@@ -2,6 +2,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Skip common config files that aren't actual translations
+const CONFIG_FILES = ['package.json', 'renovate.json', 'translators.json'];
+
 const cwd = process.cwd();
 const candidates = [
   path.join(cwd, 'crates', 'utils', 'translations'),
@@ -13,23 +16,20 @@ const candidates = [
 console.log('generate_translations: cwd =', cwd);
 
 function findTranslationsDir() {
-  // Skip common config files that aren't actual translations
-  const configFiles = ['package.json', 'renovate.json', 'translators.json'];
-  
   for (const c of candidates) {
     if (fs.existsSync(c) && fs.statSync(c).isDirectory()) {
       // First check nested 'translations' subdir (preferred)
       const nested = path.join(c, 'translations');
       if (fs.existsSync(nested) && fs.statSync(nested).isDirectory()) {
         const nestedFiles = fs.readdirSync(nested).filter(f => 
-          f.endsWith('.json') && !configFiles.includes(f)
+          f.endsWith('.json') && !CONFIG_FILES.includes(f)
         );
         if (nestedFiles.length > 0) return nested;
       }
       
       // Then look for .json files in the candidate dir itself
       const files = fs.readdirSync(c).filter(f => 
-        f.endsWith('.json') && !configFiles.includes(f)
+        f.endsWith('.json') && !CONFIG_FILES.includes(f)
       );
       if (files.length > 0) return c;
     }
@@ -49,12 +49,9 @@ if (!translationsDir) {
 
 console.log('generate_translations: using translations directory:', translationsDir);
 
-// Skip common config files that aren't actual translations
-const configFiles = ['package.json', 'renovate.json', 'translators.json'];
-
 // Read all json files in that dir and simply validate they parse as JSON.
 const jsonFiles = fs.readdirSync(translationsDir).filter(f => 
-  f.endsWith('.json') && !configFiles.includes(f)
+  f.endsWith('.json') && !CONFIG_FILES.includes(f)
 );
 if (jsonFiles.length === 0) {
   console.error('No .json translation files found in', translationsDir);
