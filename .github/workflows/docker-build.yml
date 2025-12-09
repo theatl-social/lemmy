@@ -18,11 +18,17 @@ on:
           - v0.19.13-theatl
           - 20251003/add-login-hook
           - 20251202/beta-refactor
+      lemmy_ui_ref:
+        description: 'Lemmy UI ref (branch/tag/commit) to build'
+        required: false
+        default: '0.19.14'
+        type: string
 
 env:
   REGISTRY: ghcr.io
   LEMMY_IMAGE_NAME: lemmy
   LEMMY_UI_IMAGE_NAME: lemmy-ui
+  LEMMY_UI_REF: ${{ github.event.inputs.lemmy_ui_ref || '0.19.14' }}
 
 jobs:
   build-lemmy:
@@ -88,7 +94,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: LemmyNet/lemmy-ui
-          ref: main
+          ref: ${{ env.LEMMY_UI_REF }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
