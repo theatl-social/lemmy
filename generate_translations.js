@@ -15,22 +15,22 @@ const candidates = [
 
 console.log('generate_translations: cwd =', cwd);
 
+function isTranslationFile(filename) {
+  return filename.endsWith('.json') && !CONFIG_FILES.includes(filename);
+}
+
 function findTranslationsDir() {
   for (const c of candidates) {
     if (fs.existsSync(c) && fs.statSync(c).isDirectory()) {
       // First check nested 'translations' subdir (preferred)
       const nested = path.join(c, 'translations');
       if (fs.existsSync(nested) && fs.statSync(nested).isDirectory()) {
-        const nestedFiles = fs.readdirSync(nested).filter(f => 
-          f.endsWith('.json') && !CONFIG_FILES.includes(f)
-        );
+        const nestedFiles = fs.readdirSync(nested).filter(isTranslationFile);
         if (nestedFiles.length > 0) return nested;
       }
       
       // Then look for .json files in the candidate dir itself
-      const files = fs.readdirSync(c).filter(f => 
-        f.endsWith('.json') && !CONFIG_FILES.includes(f)
-      );
+      const files = fs.readdirSync(c).filter(isTranslationFile);
       if (files.length > 0) return c;
     }
   }
@@ -40,7 +40,8 @@ function findTranslationsDir() {
 const translationsDir = findTranslationsDir();
 if (!translationsDir) {
   console.error('\nERROR: translations directory not found.');
-  console.error('Searched candidate paths:', candidates.join('\n  '));
+  console.error('Searched candidate paths:');
+  candidates.forEach(c => console.error('  -', c));
   console.error('\nIf you are building in CI, make sure git submodules are checked out:');
   console.error('  - In GitHub Actions, set actions/checkout with submodules: "recursive"');
   console.error('  - Or run: git submodule update --init --recursive');
@@ -50,9 +51,7 @@ if (!translationsDir) {
 console.log('generate_translations: using translations directory:', translationsDir);
 
 // Read all json files in that dir and simply validate they parse as JSON.
-const jsonFiles = fs.readdirSync(translationsDir).filter(f => 
-  f.endsWith('.json') && !CONFIG_FILES.includes(f)
-);
+const jsonFiles = fs.readdirSync(translationsDir).filter(isTranslationFile);
 if (jsonFiles.length === 0) {
   console.error('No .json translation files found in', translationsDir);
   process.exit(1);
