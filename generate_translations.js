@@ -15,10 +15,20 @@ const candidates = [
 
 console.log('generate_translations: cwd =', cwd);
 
+/**
+ * Checks if a filename is a translation file (JSON file that's not a config file).
+ * @param {string} filename - The filename to check
+ * @returns {boolean} True if the file is a translation file, false otherwise
+ */
 function isTranslationFile(filename) {
   return filename.endsWith('.json') && !CONFIG_FILES.includes(filename);
 }
 
+/**
+ * Finds the translations directory by searching candidate paths.
+ * Prefers nested 'translations/' subdirectories where actual translation files reside.
+ * @returns {string|null} The path to the translations directory, or null if not found
+ */
 function findTranslationsDir() {
   for (const c of candidates) {
     if (fs.existsSync(c) && fs.statSync(c).isDirectory()) {
