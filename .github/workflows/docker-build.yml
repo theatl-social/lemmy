@@ -88,6 +88,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    # Note: This job builds lemmy-ui from the upstream LemmyNet/lemmy-ui repository
+    # but tags it with this repository's branch/tag/PR info so that lemmy and lemmy-ui
+    # images have matching tags and can be deployed together
 
     steps:
       - name: Checkout lemmy-ui repository
@@ -124,6 +127,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          # Note: LemmyNet/lemmy-ui has a Dockerfile in its root directory
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
