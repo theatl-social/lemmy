@@ -2,10 +2,10 @@ name: Build Docker Images
 
 on:
   push:
-    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor", "merge/*" ]
     tags: [ "v*" ]
   pull_request:
-    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor", "merge/*" ]
   workflow_dispatch:
     inputs:
       branch:
