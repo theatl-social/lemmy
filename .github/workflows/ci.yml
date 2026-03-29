@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "forked-main", "v0.19.13-theatl", "20251003/add-login-hook", "20251202/beta-refactor" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251003/add-login-hook", "20251202/beta-refactor", "merge/*" ]
   pull_request:
-    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor" ]
+    branches: [ "forked-main", "v0.19.13-theatl", "20251202/beta-refactor", "merge/*" ]
 
 env:
   CARGO_TERM_COLOR: always
