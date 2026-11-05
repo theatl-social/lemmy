@@ -23,7 +23,7 @@ The workflow runs on:
 
 Images are automatically tagged with:
 - **Branch name**: `v0.19.13-theatl`
-- **PR number**: `pr-123` (for pull requests)
+- Pull requests retain candidate artifacts only; they do not publish registry tags.
 - **Semver**: `0.19.13`, `0.19` (for version tags)
 - **SHA**: `v0.19.13-theatl-abc1234` (git commit SHA)
 - **Latest**: `latest` (for default branch only)
@@ -87,26 +87,21 @@ docker pull ghcr.io/theatl-social/lemmy:latest
 
 ## Build Process
 
-### Lemmy Backend
+### Build, smoke, then publish
 
-1. Checkout repository with submodules
-2. Set up Docker Buildx (multi-platform support)
-3. Extract metadata for tags and labels
-4. Login to GHCR
-5. Build image using `docker/Dockerfile`
-6. Push to GHCR (if not a PR)
-7. Cache layers for faster subsequent builds
+The backend and UI jobs build `linux/amd64` candidate images and save them as
+short-lived Docker archive artifacts. The UI source is the pinned matching
+`LemmyNet/lemmy-ui` release, with full Git tags and recursive translations
+submodules; a source guard rejects version drift from `Cargo.toml`.
 
-### Lemmy UI
+A dependent smoke job loads both exact images and starts disposable PostgreSQL,
+backend and UI services. It checks the real API version, server-rendered site HTML
+and JavaScript assets. Only a successful smoke permits the publication jobs to
+load and push those same images, without rebuilding. PRs build and smoke without
+publishing. Backend and UI layer caches use separate scopes.
 
-1. Checkout repository
-2. Checkout `LemmyNet/lemmy-ui` (main branch)
-3. Set up Docker Buildx
-4. Extract metadata for tags and labels
-5. Login to GHCR
-6. Build image from `lemmy-ui` directory
-7. Push to GHCR (if not a PR)
-8. Cache layers for faster subsequent builds
+See [UI diagnosis and runnable checks](../../scripts/ui/README.md) for historical
+failure evidence, local commands and the limits of the smoke proof.
 
 ## Caching
 
