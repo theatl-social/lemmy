@@ -32,7 +32,7 @@ cat > "$smoke_dir/lemmy.hjson" <<'CONFIG'
   setup: {
     admin_username: "smoke_admin"
     admin_password: "smoke-only-password"
-    site_name: "Lemmy UI smoke fixture"
+    site_name: "Lemmy UI smoke"
   }
 }
 CONFIG

@@ -107,6 +107,19 @@ These are native build, database and browser results. The Docker image harness
 and registry publication still require a successful CI run; no production
 configuration or deployed service was tested.
 
+### CI fixture correction on 2026-11-06
+
+The first image smoke in run `42113876657` stopped during site initialization:
+the fixture name `Lemmy UI smoke fixture` was 21 characters, exceeding the site's
+20-character database limit. The harness now uses `Lemmy UI smoke`, matching the
+successful native fixture. Both Linux image builds had succeeded.
+
+The exact backend and UI archives from that run passed the corrected complete
+image harness locally in Docker Desktop (amd64 images under ARM emulation),
+including real PostgreSQL, API readiness, SSR and JavaScript assets. The harness
+removed its own test containers and network. Native Linux CI must still pass
+before publication.
+
 The matched 0.19.21 UI Dockerfile installs Corepack explicitly, avoiding the old
 missing-Corepack assumption. It still uses mutable `node:current-slim` base images,
 unversioned global `node-gyp`/`corepack` installs and OS packages. Pinning UI source
